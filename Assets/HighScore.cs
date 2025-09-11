@@ -1,25 +1,24 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using Unity.VisualScripting;
+using UnityEngine;
+using TMPro; 
 
 public class HighScore : MonoBehaviour
 {
-    static private Text _UI_TEXT;
+    //The type is TMP_Text (capital T)
+    static private TMP_Text _UI_TEXT;
     static private int _SCORE = 0;
-    private Text txtCom;
 
-    private void Awake()
+    void Awake()
     {
-       _UI_TEXT = GetComponent<Text>();
+        //Use GetComponent<TMP_Text>()
+        _UI_TEXT = GetComponent<TMP_Text>();
 
-        if (PlayerPrefs.HasKey("HighScore")) {
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
             SCORE = PlayerPrefs.GetInt("HighScore");
-        } else {
-            SCORE = 0;
         }
-        PlayerPrefs.SetInt("HighScore", SCORE);
+        // PlayerPrefs.SetInt is Handled by the SCORE property
     }
 
     static public int SCORE
@@ -29,7 +28,8 @@ public class HighScore : MonoBehaviour
         {
             _SCORE = value;
             PlayerPrefs.SetInt("HighScore", value);
-            if (_UI_TEXT != null) {
+            if (_UI_TEXT != null)
+            {
                 _UI_TEXT.text = "High Score: " + value.ToString("#,0");
             }
         }
@@ -38,7 +38,7 @@ public class HighScore : MonoBehaviour
     static public void TRY_SET_HIGH_SCORE(int scoreToTry)
     {
         if (scoreToTry <= SCORE) return;
-                SCORE = scoreToTry;
+        SCORE = scoreToTry;
     }
 
     [Tooltip("Check this box to reset the HighScore in PlayerPrefs.")]
@@ -46,7 +46,8 @@ public class HighScore : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (resetHighScoreNow) {
+        if (resetHighScoreNow)
+        {
             resetHighScoreNow = false;
             PlayerPrefs.SetInt("HighScore", 1000);
             Debug.LogWarning("PlayerPrefs HighScore reset to 1000");

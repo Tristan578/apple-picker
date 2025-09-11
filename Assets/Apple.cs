@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Apple : MonoBehaviour
 {
@@ -10,10 +8,15 @@ public class Apple : MonoBehaviour
     {
         if (transform.position.y < bottomY)
         {
+            Debug.Log("Apple has fallen below bottomY! Calling AppleMissed.");
             Destroy(gameObject);
+            ApplePicker.instance.AppleMissed();
         }
+    }
 
-        ApplePicker apScript = Camera.main.GetComponent<ApplePicker>();
-        apScript.AppleMissed();
+    // This function will run the moment the apple is destroyed for any reason.
+    void OnDestroy()
+    {
+        Debug.Log("Apple was destroyed at Y-position: " + transform.position.y);
     }
 }
